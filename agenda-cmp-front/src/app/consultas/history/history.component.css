@@ -1,0 +1,36 @@
+.full-width-table {
+    width: 100%;
+  }
+  .tablerow:hover{
+      background-color: #f2f2f2;
+      cursor: pointer;
+  }
+.espera{
+    color:#3f51b5;
+}
+.canceladap{
+    color: #a10050;
+}
+.diferida{
+    color: #d6c71c;
+}
+.procesada{
+    color:#5fa910;
+}
+
+.noasistio{
+    color:#ff0000;
+}
+.default{
+    color:#3f51b5;
+}
+.leyenda {
+  width: 14px;
+  height: 14px;
+  margin: 5px;
+  border-radius: 100%;
+}
+
+.leyenda:hover {
+  cursor: pointer;
+}

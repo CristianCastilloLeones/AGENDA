@@ -1,0 +1,123 @@
+<div class="main-cont">
+  <div fxLayout="column" fxFlexAlign="center">
+    <form [formGroup]="anamnesisForm">
+
+      <div fxLayout="row wrap" fxLayout.xs="column">
+        <label fxFlex="100%">1. Motivo de la consulta.</label>
+        <div fxLayout="row" fxFlex="100%" fxLayoutGap="5px">
+          <mat-form-field fxFlex="49%">
+            <input readonly matInput placeholder="A" formControlName="motivo_a">
+          </mat-form-field>
+          <mat-form-field fxFlex="49%">
+            <input readonly matInput placeholder="B" formControlName="motivo_b">
+          </mat-form-field>
+        </div>
+        <div fxLayout="row" fxFlex="100%" fxLayoutGap="5px">
+          <mat-form-field fxFlex="49%">
+            <input readonly matInput placeholder="C" formControlName="motivo_c">
+          </mat-form-field>
+          <mat-form-field fxFlex="49%">
+            <input readonly matInput placeholder="D" formControlName="motivo_d">
+          </mat-form-field>
+        </div>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <div fxLayout="row wrap" fxLayout.xs="column">
+        <label fxFlex="100%">2. Antecendetes Personales.</label>
+        <mat-checkbox (click)="false" *ngFor="let ap of ant_personales" formControlName="{{ap.control}}" labelPosition="after" fxFlex="16.66%"
+          fxFlex.sm="25%" style="padding-left:15px; padding-right:15px; font-size:10px;">
+          {{ap.name}}
+        </mat-checkbox>
+        <mat-form-field fxFlex="100%">
+          <textarea readonly matInput placeholder="Observaciones" formControlName="antecedente_personales">
+              </textarea>
+        </mat-form-field>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <div fxLayout="row wrap" fxLayout.xs="column">
+        <label fxFlex="100%">3. Antecendetes Familiares.</label>
+        <mat-checkbox (click)="false" *ngFor="let af of ant_familiares" formControlName="{{af.control}}" labelPosition="after" fxFlex="20%"
+          style="padding-left:15px; padding-right:15px; font-size:10px;">
+          {{af.name}}
+        </mat-checkbox>
+        <mat-form-field fxFlex="100%">
+          <textarea readonly matInput placeholder="Observaciones" formControlName="antecedentes_familiares">
+              </textarea>
+        </mat-form-field>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <div fxLayout="row wrap" fxLayout.xs="column">
+        <label fxFlex="100%">4. Enfermedad o problema actual.</label>
+        <mat-form-field fxFlex="100%">
+          <textarea readonly matInput formControlName="enf_problema_actual">
+                </textarea>
+        </mat-form-field>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <div fxLayout="row wrap" fxLayout.xs="column">
+        <label fxFlex="100%">5. Revisión actual de Órganos y Sistemas.</label>
+        <div *ngFor="let rva of revision_actual" fxLayout="row wrap" fxFlex="20%" fxLayoutGap="5px" class="box-c">
+          <label style="font-size: 10px;" fxFlex="100%">{{rva.name}}</label>
+          <mat-checkbox (click)="false" formControlName="{{rva.cp}}" style="font-size: 10px;">CP</mat-checkbox>
+          <mat-checkbox (click)="false" formControlName="{{rva.sp}}" style="font-size: 10px;">SP</mat-checkbox>
+        </div>
+        <mat-form-field fxFlex="100%">
+          <textarea readonly placeholder="Observaciones" matInput formControlName="revision_org_sistemas">
+                  </textarea>
+        </mat-form-field>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <div fxLayout="row wrap" fxLayout.xs="column">
+        <label fxFlex="100%">6. Signos Vitales.</label>
+        <div *ngFor="let sv of signos_vitales" fxLayout="row wrap" fxFlex="20%" fxLayoutGap="5px">
+          <label style="font-size: 10px;" fxFlex="50%">{{sv.name}}</label>
+          <mat-form-field fxFlex="49%">
+            <input readonly matInput formControlName="{{sv.control}}">
+          </mat-form-field>
+        </div>
+        <label fxFlex="10%" style="font-size: 12px;">ESCALA DE COMA DE GLASGOW</label>
+        <div fxFlex="30%" fxLayoutGap="5px">
+          <mat-form-field fxFlex="33.33%">
+            <input readonly matInput placeholder="M" formControlName="gcs_m">
+          </mat-form-field>
+          <mat-form-field fxFlex="33.33%">
+            <input readonly matInput placeholder="O" formControlName="gcs_o">
+          </mat-form-field>
+          <mat-form-field fxFlex="33.33%">
+            <input readonly matInput placeholder="V" formControlName="gcs_v">
+          </mat-form-field>
+        </div>
+        <mat-form-field fxFlex="100%">
+          <textarea readonly placeholder="Observaciones" matInput formControlName="signos_vitales">
+                      </textarea>
+        </mat-form-field>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <div fxLayout="row wrap" fxLayout.xs="column">
+        <label fxFlex="100%">7. Examen Físico.</label>
+        <div *ngFor="let ef of examen_fisico" fxLayout="row wrap" fxFlex="20%" fxLayoutGap="5px" class="box-c">
+          <label style="font-size: 10px;" fxFlex="100%">{{ef.name}}</label>
+          <mat-checkbox (click)="false" formControlName="{{ef.cp}}" style="font-size: 10px;">CP</mat-checkbox>
+          <mat-checkbox (click)="false" formControlName="{{ef.sp}}" style="font-size: 10px;">SP</mat-checkbox>
+        </div>
+        <mat-form-field fxFlex="100%">
+          <textarea readonly placeholder="Observaciones" matInput formControlName="examen_fisico">
+                    </textarea>
+        </mat-form-field>
+      </div>
+
+    </form>
+  </div>
+</div>

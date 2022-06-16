@@ -1,0 +1,101 @@
+<div class="downProcess mat-elevation-z8 scale-animation" *ngIf="downloading">
+  <mat-spinner diameter="50" color="accent"></mat-spinner>
+</div>
+
+<div class="grid-container">
+  <h1 class="mat-h1">Dashboard</h1>
+
+  <ng-select 
+  placeholder="Especialista"
+  notFoundText="No se encontraron coincidencias."
+  [items]="users"
+  bindLabel="label"
+  (change)="search()"
+  [(ngModel)]="user">
+    <ng-template ng-option-tmp let-item="item">
+        {{item.name}} {{item.surname}} <small> - {{item.specialty}}</small>
+    </ng-template>
+  </ng-select>  
+
+  <mat-grid-list cols="2" rowHeight="350px">
+    <mat-grid-tile *ngFor="let card of cards | async; let i = index;" [colspan]="card.cols" [rowspan]="card.rows">
+      <mat-card class="dashboard-card">
+        <mat-card-header>
+          <mat-card-title>
+            {{card.title}}
+            <button mat-icon-button class="more-button" (click)="switchReport(i)"
+             *ngIf="i < 2">
+              <mat-icon>get_app</mat-icon>
+            </button>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="dashboard-card-content">
+        
+        <div *ngIf="i == 0" style="display: flex; justify-content: space-around; flex-flow: row;">
+          <div>
+            <h3>Atendidas</h3>
+            <span style="font-size: 5rem;">{{avg}}%</span>
+            <br>
+            <div fxLayout="row" fxLayoutAlign="space-between">
+              <div fxLayout="column" fxLayoutAlign="space-between">
+                <span class="total-title">Atendidas</span>
+                <span class="total-number">{{eventCounter.done}}</span>
+              </div>
+              <div fxLayout="column" fxLayoutAlign="space-between">
+                <span class="total-title">Por atender</span>
+                <span class="total-number">{{eventCounter.todo}}</span>
+              </div>
+              <div fxLayout="column" fxLayoutAlign="space-between">
+                <span class="total-title">Canceladas</span>
+                <span class="total-number">{{eventCounter.canceled}}</span>
+              </div>
+            </div>  
+          </div>
+          <div>
+          <canvas baseChart
+            style="height: 250px; display: block;"
+            [options]="{responsive:true}"
+            [datasets]="lineChartData"
+            [colors]="lineChartColors"
+            [labels]="lineChartLabels"
+            [chartType]="lineChartType"
+            (chartHover)="chartHovered($event)"
+            (chartClick)="chartClicked($event)"></canvas>
+          </div>          
+        </div>
+
+          <div *ngIf="i == 1" style="display: flex; flex-flow: row; justify-content: space-around;">
+              <div>
+              <canvas baseChart
+                width="400px"
+                height="400px" 
+                style="display: block;" 
+                [data]="doughnutChartData"
+                [options]="{responsive:true}"
+                [labels]="doughnutChartLabels"
+                [chartType]="doughnutChartType"
+                (chartHover)="chartHovered($event)"
+                (chartClick)="chartClicked($event)"></canvas>
+          </div>
+          </div>
+
+          <div *ngIf="i == 2" style="display: flex; flex-flow: row; justify-content: space-around;">
+          <div>
+          <canvas baseChart
+            width="400px"
+            height="400px"
+            style="display: block;"
+            [datasets]="radarChartData"
+            [options]="{responsive:true}"
+            [labels]="radarChartLabels"
+            [chartType]="radarChartType"
+            (chartHover)="chartHovered($event)"
+            (chartClick)="chartClicked($event)"></canvas>
+          </div>
+          </div>
+
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>

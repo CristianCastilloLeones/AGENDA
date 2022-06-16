@@ -1,0 +1,86 @@
+<mat-progress-bar class="top-progress" mode="indeterminate" color="accent" *ngIf="processing"></mat-progress-bar>
+<div class="main-cont">
+  <div>
+    <h1 class="mat-h1">
+      <mat-icon>blur_circular</mat-icon> Papanicolaou
+      {{price | currency}}
+    </h1>
+  </div>
+
+  <form [formGroup]="papaGroup">
+    <div fxLayout="column">
+
+      <ng-select *ngIf="showPatients" placeholder="Paciente" notFoundText="No se encontraron coincidencias."
+        [items]="patients" formControlName="patient" bindLabel="fullname"  (change)="setAge($event.dni)">
+
+        <ng-template ng-header-tmp>
+          <button mat-flat-button color="accent" (click)="newPatient()">
+            <mat-icon>add</mat-icon> Agregar nuevo
+          </button>
+        </ng-template>
+
+        <ng-template ng-option-tmp let-item="item">
+          {{item.name.toUpperCase()}} {{item.surname.toUpperCase()}}
+        </ng-template>
+
+      </ng-select>
+
+      <mat-form-field>
+        <span matPrefix>
+          G: &nbsp;
+        </span>
+        <input matInput type="text" formControlName="g">
+      </mat-form-field>
+
+      <mat-form-field>
+        <span matPrefix>
+          A: &nbsp;
+        </span>
+        <input matInput type="text" formControlName="a">
+      </mat-form-field>
+
+      <mat-form-field>
+        <span matPrefix>
+          P: &nbsp;
+        </span>
+        <input matInput type="text" formControlName="p">
+      </mat-form-field>
+
+      <mat-form-field>
+        <span matPrefix>
+          C: &nbsp;
+        </span>
+        <input matInput type="text" formControlName="c">
+      </mat-form-field>
+
+      <mat-form-field>
+        <span matPrefix>
+          F.U.M:
+          &nbsp;
+        </span>
+        <input matInput type="text" formControlName="fum">
+      </mat-form-field>
+
+      <mat-form-field>
+        <span matPrefix>Edad: &nbsp;</span>
+        <input matInput type="text" formControlName="edad" readonly>
+      </mat-form-field>
+
+      <mat-form-field>
+        <span matPrefix>
+          HC: &nbsp;
+        </span>
+        <input matInput type="text" formControlName="hc">
+      </mat-form-field>
+
+      <mat-form-field fxFlex="100%">
+        <input matInput placeholder="Observación" formControlName="observation">
+      </mat-form-field>
+
+    </div>
+
+  </form>
+
+  <button mat-flat-button color="primary" [disabled]="processing" (click)="save()">Procesar</button>
+
+</div>

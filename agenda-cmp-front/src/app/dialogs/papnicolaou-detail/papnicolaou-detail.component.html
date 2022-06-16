@@ -1,0 +1,48 @@
+<h1 class="mat-h1">Papanicolaou</h1>
+
+<div fxLayout="column" mat-dialog-content>
+
+  <mat-form-field>
+    <span matPrefix>G&nbsp;</span>
+    <input matInput readonly type="text" value="{{papaData.g}}">
+  </mat-form-field>
+
+  <mat-form-field>
+    <span matPrefix>A&nbsp;</span>
+    <input matInput readonly type="text" value="{{papaData.a}}">
+  </mat-form-field>
+
+  <mat-form-field>
+    <span matPrefix>P&nbsp;</span>
+    <input matInput readonly type="text" value="{{papaData.p}}">
+  </mat-form-field>
+
+  <mat-form-field>
+    <span matPrefix>C&nbsp;</span>
+    <input matInput readonly type="text" value="{{papaData.c}}">
+  </mat-form-field>
+
+  <mat-form-field>
+    <span matPrefix>F.U.M&nbsp;</span>
+    <input matInput readonly type="text" value="{{papaData.fum}}">
+  </mat-form-field>
+
+  <mat-form-field>
+    <span matPrefix>Edad&nbsp;</span>
+    <input matInput readonly type="text" value="{{papaData.edad}}" readonly>
+  </mat-form-field>
+
+  <mat-form-field>
+    <span matPrefix>HC&nbsp;</span>
+    <input matInput readonly type="text" value="{{papaData.hc}}">
+  </mat-form-field>
+
+</div>
+
+<div mat-dialog-actions>
+  <button mat-flat-button [disabled]="papaData.prefact != 0" *ngIf="role === '4' || role === '1'" color="accent" (click)="prefacturar()">Prefacturar</button>
+  &nbsp;
+  <button mat-flat-button [disabled]="papaData.muestra != 0" *ngIf="role === '5' || role === '1'" color="accent" (click)="fillMuestra()">Recibir muestra</button>
+  &nbsp;
+  <button mat-flat-button [disabled]="papaData.muestra != 1" *ngIf="role === '5' || role === '1'" color="accent" (click)="deliveryMuestra()">Entregar muestra</button>
+</div>

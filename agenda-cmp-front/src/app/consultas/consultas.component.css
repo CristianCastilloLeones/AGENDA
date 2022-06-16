@@ -1,0 +1,9 @@
+.leyenda{
+	width: 14px;
+	height: 14px;
+	margin:5px;
+	border-radius: 100%;
+}
+.leyenda:hover{
+	cursor: pointer;
+}

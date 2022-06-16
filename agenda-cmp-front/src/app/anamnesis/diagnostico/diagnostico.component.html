@@ -1,0 +1,130 @@
+<mat-progress-bar class="top-progress" mode="indeterminate" color="accent" *ngIf="processing"></mat-progress-bar>
+
+
+<div class="main-cont">
+
+  <div fxLayout="row">
+    <mat-icon class="little-down">add</mat-icon>
+    <h1 class="mat-h1">Nueva receta</h1>
+  </div>
+
+  <form [formGroup]="consultaForm">
+
+    <div fxLayout="row wrap" fxLayout.xs="column">
+
+      <ng-select fxFlex="99%" placeholder="Paciente" notFoundText="No se encontraron coincidencias." [(items)]="pacientes"
+       [(ngModel)]="paciente" id="patient-text" formControlName="patient" *ngIf="outside" bindLabel="fullName" >
+        <ng-template ng-header-tmp>
+          <button mat-flat-button color="accent" (click)="newPatient()">
+            <mat-icon>add</mat-icon> Agregar nuevo
+          </button>
+        </ng-template>
+        <ng-template ng-option-tmp let-item="item">
+          {{item.name | uppercase}} {{item.surname | uppercase}} <small>{{item.dni}}</small>
+        </ng-template>
+
+      </ng-select>
+
+
+      <mat-divider></mat-divider>
+
+      <label fxFlex="100%">2. Descripción del diagnostico.</label>
+
+      <div fxLayout="row wrap" fxFlex="100%">
+        <div fxLayout="row wrap" fxFlex="100%" *ngFor="let desc of descripciones">
+          <mat-form-field fxFlex="80%">
+
+            <input type="text"  placeholder="{{desc.placeholder}}" matInput formControlName="{{desc.controlText}}"
+              [matAutocomplete]="auto">
+
+            <mat-autocomplete #auto="matAutocomplete" onselect="searchCie($value)" >
+              <mat-option *ngFor="let cie of cie10" [value]="cie.cod_cie+' | '+cie.descripcion">
+                {{cie.cod_cie}} | {{cie.descripcion}}
+              </mat-option>
+            </mat-autocomplete>
+            <div matSuffix>
+                <mat-icon  style="color:red; cursor: pointer;" *ngIf="clearCie" (click)="clearCie10()">
+                  remove_circle
+                </mat-icon>
+
+            </div>
+            <div matSuffix>
+              <mat-spinner diameter="15" *ngIf="loadCie"></mat-spinner>
+            </div>
+
+          </mat-form-field>
+          <div fxFlex="4%"></div>
+          <mat-checkbox fxFlex="8%" formControlName="{{desc.controlPre}}">PRE</mat-checkbox>
+          <mat-checkbox fxFlex="8%" formControlName="{{desc.controlDef}}">DEF</mat-checkbox>
+        </div>
+      </div>
+    </div>
+
+  </form>
+
+  <form [formGroup]="recetaForm">
+
+    <div fxLayout="row wrap" fxLayoutGap="4px">
+
+      <label fxFlex="20%">3. Receta.</label>
+      <br>
+
+      <mat-slide-toggle formControlName="convenio" fxFlex="80%" disabled>Convenio</mat-slide-toggle>
+      <span style="padding-bottom:20px" fxFlex="100%"></span>
+      <mat-form-field fxFlex="70%">
+        <input type="text" placeholder="Descripción" matInput [matAutocomplete]="auto"
+          (keyup)="searchProduct($event.target.value)" (change)="calcTotal()" formControlName="receta">
+      </mat-form-field>
+
+      <mat-autocomplete #auto="matAutocomplete"  (optionSelected)="quantityInput.focus()">
+        <mat-option *ngFor="let product of filteredProducts"
+          [value]="product.id +'.'+ product.name + '--' + product.generic + '\ Disp. ' + product.quantity"
+          style="font-size:12px;"  >
+          <span style="background-color:blue; color:white; padding: 2px;">Disp. {{product.quantity}}</span>
+          <span
+            style="background-color:green; color:white; padding: 2px;">{{product.unit_price | currency : "$"}}</span>
+          - {{product.name}} - {{product.generic}}
+        </mat-option>
+      </mat-autocomplete>
+
+      <mat-form-field fxFlex="8%">
+        <input type="number"  (keyup)="calcTotal()" #quantityInput (change)="calcTotal()" (keyup.enter)="presciptionInput.focus()" placeholder="Cant" matInput
+          formControlName="quantity">
+        <mat-hint *ngIf="recetaForm.get('quantity').hasError('max')" style="color:red;">Stock insuficiente</mat-hint>
+      </mat-form-field>
+
+      <mat-form-field fxFlex="10%">
+        <input type="text" (keyup)="calcTotal()" placeholder="Precio" matInput formControlName="unit_price">
+      </mat-form-field>
+
+      <mat-form-field fxFlex="10%">
+        <input type="number" placeholder="Sub total" matInput formControlName="subtotal" readonly>
+      </mat-form-field>
+
+
+
+    </div>
+    <div fxLayout="row wrap" fxLayoutGap="4px" fxLayoutAlign="start center">
+      <mat-form-field fxFlex="45%">
+        <textarea placeholder="Prescripción" #presciptionInput matInput formControlName="prescripcion">
+                </textarea>
+      </mat-form-field>
+
+      <button mat-flat-button color="accent" fxFlex="5%" (click)="addRecItem()" matTooltip="Agregar a la lista"
+        [disabled]="consultaForm.invalid || recetaForm.invalid">
+        <mat-icon>add</mat-icon>
+      </button>
+
+      <mat-form-field fxFlex="45%">
+        <textarea placeholder="Observaciones de la receta." matInput formControlName="observation">
+                </textarea>
+      </mat-form-field>
+    </div>
+  </form>
+
+  <button mat-flat-button color="primary"  [disabled]="consultaForm.invalid || recetaForm.invalid || processing" *ngIf="outside" (click)="confirmSave()">Procesar</button>
+
+  <br>
+  <app-recipe></app-recipe>
+
+</div>

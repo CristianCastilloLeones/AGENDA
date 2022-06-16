@@ -1,0 +1,7 @@
+<div fxLayout="column">
+  <mat-form-field appearance="outline">
+    <textarea placeholder="Indicaciones de dieta" matInput cols="30" rows="6" [(ngModel)]="diet"
+    style="white-space: pre-wrap;"></textarea>
+  </mat-form-field>
+</div>
+<button mat-flat-button color="primary" [disabled]="disableButton" (click)="save()">Procesar</button>

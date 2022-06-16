@@ -1,0 +1,44 @@
+.link{
+	text-decoration: none; color:rgb(0, 0, 0);
+	font-size: 14px;
+}
+.link:hover{
+	cursor: pointer;
+}
+img{
+  max-width: 100%;
+  max-height: 95px;
+}
+
+.cover{
+  background-image: url(../../assets/cover.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  background-size: cover;
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+.title{
+  color:rgb(0, 0, 0);
+  text-align: center;
+}
+.linkblue{
+  color: rgb(78, 168, 209);
+}
+.example-card {
+  max-width: 450px;
+  min-width: 350px;
+  padding:25px;
+}
+.main-div {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+  text-align: center;
+
+}

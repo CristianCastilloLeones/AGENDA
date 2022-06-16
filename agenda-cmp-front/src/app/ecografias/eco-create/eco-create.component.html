@@ -1,0 +1,89 @@
+<mat-progress-bar class="top-progress" mode="indeterminate" color="accent" *ngIf="processing"></mat-progress-bar>
+
+<div class="main-cont">
+
+  <div fxLayout="row" fxLayoutAlign="space-between start">
+    <h1 class="mat-h1">Nueva ecografía</h1>
+    <h1 class="mat-h1"><mat-chip-list #chipList>Total: <mat-chip style="background:#FF6E40;font-size: 20px;">{{total | currency}}</mat-chip></mat-chip-list></h1>
+  </div>
+
+  <form [formGroup]="ecoRegForm">
+
+
+    <div class="container" fxLayout fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="10px" fxLayoutGap.xs="0">
+
+<!-- <div fxFlex="40%">
+  <ng-select placeholder="Ecografias" [multiple]="true" [closeOnSelect]="false"
+    notFoundText="No se encontraron coincidencias." [items]="ecos" bindLabel='name' formControlName="eco"
+    (change)="calcTotal()">
+    <ng-template ng-option-tmp let-item="item">
+      {{item.name}} <small>{{item.unit_price | currency}}</small>
+    </ng-template>
+  </ng-select>
+</div> -->
+<mat-card fxFlex="40%" fxFlex.xs="100%" style="margin-bottom:1%;">
+  <mat-card-header>
+    <mat-card-title>Ecografias</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-grid-list cols="2" rowHeight="25px">
+
+      <ng-container *ngFor="let value of ecos">
+        <mat-grid-tile>
+          <mat-checkbox class="text-inside-grid" (change)="onCheckboxChecked($event, value)" >
+            {{value.name}} <small style="color:blue"> {{value.unit_price | currency}}</small></mat-checkbox>
+
+        </mat-grid-tile>
+      </ng-container>
+    </mat-grid-list>
+  </mat-card-content>
+</mat-card>
+      <mat-card fxFlex="60%" fxFlex.xs="100%">
+        <mat-card-content >
+          <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="5px">
+            <ng-select fxFlex="50%" fxFlex.xs="100%" placeholder="Paciente" notFoundText="No se encontraron coincidencias." [(items)]="pacientes"
+              bindLabel='fullName' id="patient-text" formControlName="patient">
+              <ng-template ng-header-tmp>
+                <button mat-flat-button color="accent" (click)="newPatient()">
+                  <mat-icon>add</mat-icon> Agregar nuevo
+                </button>
+              </ng-template>
+              <ng-template ng-option-tmp let-item="item">
+                {{item.name | uppercase}} {{item.surname | uppercase}} <small>{{item.dni}}</small>
+              </ng-template>
+
+            </ng-select>
+            <ng-select fxFlex="50%" fxFlex.xs="100%" *ngIf="showPrefact" placeholder="Ecografista" notFoundText="No se encontraron coincidencias."
+              [items]="doctores" bindLabel='fullName' formControlName="doctor">
+
+              <ng-template ng-option-tmp let-item="item">
+                {{item.name | uppercase}} {{item.surname | uppercase}} <small>{{item.dni}}</small>
+              </ng-template>
+
+            </ng-select>
+          </div>
+
+
+
+          <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="5px">
+            <mat-form-field fxFlex="100%">
+              <input matInput formControlName="observation" placeholder="Observación">
+            </mat-form-field>
+
+            <!-- <mat-form-field fxFlex="100%">
+                              <input matInput formControlName="realizado" placeholder="Realizado Por:">
+                            </mat-form-field> -->
+          </div>
+        <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="5px">
+          <button fxFlex="100%" mat-flat-button color="primary" (click)="save()">Procesar</button>
+
+        </div>
+
+
+        </mat-card-content>
+
+      </mat-card>
+    </div>
+  </form>
+  <br>
+</div>

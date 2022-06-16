@@ -1,0 +1,23 @@
+<div class="block-container" style="justify-content: center;">
+	<div *ngFor="let block of timeblocks; let i = index;"
+	class="block"
+	id="block-{{id}}-{{i}}"
+	(click)="setHour(block, 'block-'+id+'-'+i)">
+		<span>{{block.start.slice(0, 5)}}</span>
+		<mat-divider></mat-divider>
+		<span>{{block.end.slice(0, 5)}}</span>
+	</div>
+</div>
+<br>
+
+<div style="justify-content: space-between; display: flex; flex-flow: row;">
+
+	<button style="font-size: .7rem;" mat-raised-button color="primary" [disabled]="cantPreset" (click)="preset(1)">Solo mañana</button>
+
+	<button style="font-size: .7rem;" mat-raised-button color="primary" [disabled]="cantPreset" (click)="preset(2)">Solo tarde</button>
+
+
+	<button style="font-size: .7rem;" mat-raised-button color="primary" [disabled]="cantPreset" (click)="preset(3)">Todo el dia</button>
+
+	<button style="font-size: .7rem;" class="taken" mat-raised-button [disabled]="cantPreset" (click)="preset(4)">Reiniciar</button>
+</div>

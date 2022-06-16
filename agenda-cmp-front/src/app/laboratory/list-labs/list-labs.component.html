@@ -1,0 +1,61 @@
+<mat-progress-bar class="top-progress" mode="indeterminate" color="accent" *ngIf="processing"></mat-progress-bar>
+
+<div class="main-cont">
+
+  <div fxLayout="row">
+    <mat-icon class="little-down">blur_circular</mat-icon>
+    <h1 class="mat-h1">Examenes de laboratorio</h1>
+  </div>
+<!--
+  <h2 class="mat-h2">Filtrar</h2>
+  <mat-form-field>
+    <mat-label>Inicio</mat-label>
+    <input type="date" matInput [(ngModel)]="start">
+  </mat-form-field>
+  &nbsp;
+  <mat-form-field>
+    <mat-label>Fin</mat-label>
+    <input type="date" matInput [(ngModel)]="end">
+  </mat-form-field>
+  <button mat-button color="accent" (click)="">Buscar</button>
+  <br>
+-->
+    <button *ngIf="role != '7'" style="float:right; margin-bottom: 5px;" (click)="newLab()" mat-flat-button color="primary">Nuevo laboratorios</button>
+
+  <br>
+
+  <div>
+
+    <table mat-table class="full-width-table mat-elevation-z8" [dataSource]="dataSource" matSort aria-label="Elements">
+
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
+        <td mat-cell *matCellDef="let row">{{row.id}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="patname">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Paciente</th>
+        <td mat-cell *matCellDef="let row">{{row.patname}} {{row.patsurname}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="date">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Fecha</th>
+        <td mat-cell *matCellDef="let row">{{row.date | date: 'dd-MM-yyyy HH:mm'}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="print">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Imprimir</th>
+        <td mat-cell *matCellDef="let row">
+          <button mat-flat-button color="primary" (click)="printLab(row.id)">Imprimir</button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="tablerow"></tr>
+    </table>
+
+    <mat-paginator #paginator [length]="dataSource.data.length" [pageIndex]="0" [pageSize]="50" [pageSizeOptions]="[25, 50, 100, 250]">
+    </mat-paginator>
+
+  </div>
+</div>

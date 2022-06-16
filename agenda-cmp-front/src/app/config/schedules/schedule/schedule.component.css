@@ -1,0 +1,31 @@
+.block{
+	width:40px;
+	height: 65px;
+	padding: 3px;
+	background-color: rgba(63, 81, 181,.3);
+	display: flex;
+	border-left: .5px solid lightgray;
+	border-right: .5px solid lightgray;
+	border-radius: 2px;
+	flex-flow: column;
+	text-align: center;
+	justify-content: center;
+	margin:1px;
+}
+
+.taken{
+	background-color: #b54c2b/*rgba(63, 81, 181, 1)*/;
+	color:white;
+	box-shadow: 0 5px 5px -3px rgba(0,0,0,.2), 0 8px 10px 1px rgba(0,0,0,.14), 0 3px 14px 2px rgba(0,0,0,.12);	
+}
+
+.block:hover{
+	cursor: pointer;
+}
+
+.block-container{
+	display: flex;
+	flex-flow: row;
+	flex-wrap: wrap;
+	align-items: center;
+}

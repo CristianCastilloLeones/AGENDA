@@ -1,0 +1,20 @@
+<div class="main-cont">
+  <form [formGroup]="catGroup">
+
+    <div>
+      <h1 class="mat-h1">
+        Categoria de Laboratorio
+      </h1>
+    </div>
+
+    <mat-form-field>
+      <input matInput placeholder="Nombre" formControlName="name">
+    </mat-form-field>
+    <br>
+    <button mat-flat-button color="primary" (click)="save()">
+      Guardar
+    </button>
+
+  </form>
+
+</div>

@@ -1,0 +1,178 @@
+<mat-progress-bar class="top-progress" mode="indeterminate" color="accent" *ngIf="processing"></mat-progress-bar>
+
+<div class="main-cont">
+
+  <div fxLayout="row" fxLayoutAlign="space-between start">
+
+    <h1 class="mat-h1">Nuevo Laboratorio</h1>
+
+    <h1 class="mat-h1">
+      <mat-chip-list #chipList>Total: <mat-chip style="background:#FF6E40;font-size: 20px;">{{total | currency}}</mat-chip>
+      </mat-chip-list>
+    </h1>
+  </div>
+          <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between center" fxLayoutGap="5px">
+            <ng-template ng-header-tmp>
+              <button mat-flat-button color="accent" (click)="newPatient()">
+                <mat-icon>add</mat-icon> Agregar nuevo
+              </button>
+            </ng-template>
+
+            <ng-select fxFlex="30%" placeholder="Paciente" notFoundText="No se encontraron coincidencias." [(items)]="pacientes"
+              [(ngModel)]="paciente" *ngIf="showPrefact" bindLabel="fullName">
+
+              <ng-template ng-header-tmp>
+                <button mat-flat-button color="accent" (click)="newPatient()">
+                  <mat-icon>add</mat-icon> Agregar nuevo
+                </button>
+              </ng-template>
+
+              <ng-template ng-option-tmp let-item="item" fxFlex="100%">
+                {{item.name | uppercase}} <small>{{item.surname | uppercase}}</small>
+              </ng-template>
+
+            </ng-select>
+
+            <ng-select fxFlex="30%" placeholder="Laboratorista" notFoundText="No se encontraron coincidencias." [(items)]="labora"
+              [(ngModel)]="laboratorista" *ngIf="showPrefact" bindLabel="name">
+              <ng-template ng-option-tmp let-item="item" fxFlex="100%">
+                {{item.name |uppercase}} <small>{{item.surname |uppercase}}</small>
+              </ng-template>
+
+            </ng-select>
+
+            <mat-form-field fxFlex="30%" appearance="legacy">
+              <input   matInput placeholder="Observación" [(ngModel)]="observation">
+            </mat-form-field>
+
+              <button [disabled]="processing" *ngIf="!prefact && role != '7'" mat-flat-button color="primary"
+                (click)="save()">Procesar</button>
+          </div>
+
+
+
+  <div fxLayout="row" fxLayoutAlign="space-between stretch"  >
+    <div fxFlex="20%" fxFlex.xs="100%">
+      <div *ngFor="let item of groupArr.slice().reverse(); let i = index;" style="margin-bottom:2%;">
+        <mat-card *ngIf="((i >= 0) && (i<5))">
+          <mat-card-title style="font-size: 16px;">{{item.cat}}</mat-card-title>
+          <mat-card-content style="font-size: 13px;">
+            <mat-grid-list [cols]="breakpoint" rowHeight="20px" (window:resize)="onResize($event)">
+
+              <ng-container *ngFor="let value of item.groupItem">
+                <mat-grid-tile>
+                  <mat-checkbox class="text-inside-grid" (change)="onCheckboxChecked($event, value)">
+                   <p matTooltip="{{value.unit_price | currency}}" matTooltipPosition="left">{{value.name}} <small style="color:blue">{{value.unit_price | currency}}</small></p> </mat-checkbox>
+
+                </mat-grid-tile>
+              </ng-container>
+            </mat-grid-list>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+<div fxFlex="20%" fxFlex.xs="100%">
+  <div *ngFor="let item of groupArr.slice().reverse(); let i = index;" style="margin-bottom:2%;">
+    <mat-card *ngIf="((i >= 5) && (i<=9))">
+      <mat-card-title style="font-size: 16px;">{{item.cat}}</mat-card-title>
+      <mat-card-content style="font-size: 13px;">
+        <mat-grid-list [cols]="breakpoint" rowHeight="20px" (window:resize)="onResize($event)">
+
+          <ng-container *ngFor="let value of item.groupItem">
+            <mat-grid-tile>
+              <mat-checkbox class="text-inside-grid" (change)="onCheckboxChecked($event, value)">
+              <p matTooltip="{{value.unit_price | currency}}" matTooltipPosition="left">
+                {{value.name}} <small style="color:blue">{{value.unit_price | currency}}
+                </small></p></mat-checkbox>
+
+            </mat-grid-tile>
+          </ng-container>
+        </mat-grid-list>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+<div fxFlex="20%" fxFlex.xs="100%">
+  <div *ngFor="let item of groupArr.slice().reverse(); let i = index;" style="margin-bottom:2%;">
+    <mat-card *ngIf="((i > 9) && (i<14))">
+      <mat-card-title style="font-size: 16px;">{{item.cat}}</mat-card-title>
+      <mat-card-content style="font-size: 13px;">
+        <mat-grid-list [cols]="breakpoint" rowHeight="20px" (window:resize)="onResize($event)">
+
+          <ng-container *ngFor="let value of item.groupItem">
+            <mat-grid-tile>
+              <mat-checkbox class="text-inside-grid" (change)="onCheckboxChecked($event, value)">
+                <p matTooltip="{{value.unit_price | currency}}" matTooltipPosition="left">
+                  {{value.name}} <small style="color:blue">{{value.unit_price | currency}}
+                  </small></p>
+              </mat-checkbox>
+
+            </mat-grid-tile>
+          </ng-container>
+        </mat-grid-list>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+<div fxFlex="38%" fxFlex.xs="100%">
+  <div *ngFor="let item of groupArr; let i = index;" style="margin-bottom:2%;">
+    <mat-card *ngIf="i== 0">
+      <mat-card-title style="font-size: 16px; ">{{item.cat}}</mat-card-title>
+      <mat-card-content style="font-size: 13px;">
+        <div fxLayout="row" fxLayoutAlign="space-between stretch">
+          <mat-grid-list fxFlex="50%" fxFlex.xs="100%" [cols]="1" rowHeight="20px" (window:resize)="onResize($event)">
+
+            <ng-container *ngFor="let value of item.groupItem; let j = index;">
+              <mat-grid-tile *ngIf="j<=item.groupItem.length/2">
+                <mat-checkbox class="text-inside-grid" (change)="onCheckboxChecked($event, value)">
+                  <p matTooltip="{{value.unit_price | currency}}" matTooltipPosition="left">{{value.name}}
+                    <small style="color:blue">{{value.unit_price | currency}}</small></p>
+                </mat-checkbox>
+
+              </mat-grid-tile>
+            </ng-container>
+          </mat-grid-list>
+          <mat-grid-list fxFlex="50%" fxFlex.xs="100%" [cols]="1" rowHeight="20px" (window:resize)="onResize($event)">
+
+            <ng-container *ngFor="let value of item.groupItem; let j = index;">
+              <mat-grid-tile *ngIf="(j>item.groupItem.length/2) && (j<=item.groupItem.length)">
+                <mat-checkbox class="text-inside-grid" (change)="onCheckboxChecked($event, value)">
+                  <p matTooltip="{{value.unit_price | currency}}" matTooltipPosition="left">{{value.name}}
+                    <small style="color:blue">{{value.unit_price | currency}}</small></p>
+                </mat-checkbox>
+
+              </mat-grid-tile>
+            </ng-container>
+          </mat-grid-list>
+        </div>
+
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+
+
+  </div>
+  <div fxLayout="row" fxLayoutAlign="space-between stretch" fxLayoutGap="2px">
+
+  </div>
+
+
+
+
+
+    <!-- <ng-select fxFlex="100%" [closeOnSelect]="false" placeholder="Examenes de laboratorio"
+      notFoundText="No se encontraron coincidencias." [(items)]="labs" groupBy="cat"
+      [selectableGroup]="true" [virtualScroll]="true"
+    [selectableGroupAsModel]="false" [(ngModel)]="selectedLabs"
+      (change)="calcTotal()" bindLabel="name" appendTo="body" multiple="true" #selectM>
+    <ng-template ng-optgroup-tmp let-item="item" let-item$="item$" let-index="index">
+      <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected" /> {{item.cat | uppercase}}
+    </ng-template>
+    <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+      <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected" /> {{item.name}} <small>{{item.unit_price | currency}}</small>
+    </ng-template>
+
+    </ng-select> -->
+
+</div>

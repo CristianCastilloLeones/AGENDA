@@ -1,0 +1,68 @@
+<div class="main-cont">
+
+  <div fxLayout="row" class="tit">
+    <mat-icon class="little-down">person</mat-icon>
+    <h1 class="mat-h1">Usuarios</h1>
+  </div>
+
+  <mat-tab-group>
+
+    <mat-tab label="Adm Empresa" *ngIf="role==1">
+      <ng-template matTabContent>
+        <app-users type="adm_empresa"></app-users>
+      </ng-template>
+    </mat-tab>
+    <mat-tab label="Adm Sucursal" *ngIf="role==1">
+      <ng-template matTabContent>
+        <app-users type="adm_sucursal"></app-users>
+      </ng-template>
+    </mat-tab>
+
+    <mat-tab label="Doctores" *ngIf="role==1">
+      <ng-template matTabContent>
+        <app-users type="especialista"></app-users>
+      </ng-template>
+    </mat-tab>
+
+    <mat-tab label="Pacientes">
+      <ng-template matTabContent>
+        <app-users type="paciente"></app-users>
+      </ng-template>
+    </mat-tab>
+
+    <mat-tab label="Asistentes" *ngIf="role==1">
+      <ng-template matTabContent>
+        <app-users type="asistente"></app-users>
+      </ng-template>
+    </mat-tab>
+
+    <mat-tab label="Enfermero(a)" *ngIf="role==1">
+      <ng-template matTabContent>
+        <app-users type="enfermero"></app-users>
+      </ng-template>
+    </mat-tab>
+
+    <mat-tab label="Ecografista" *ngIf="role==1">
+      <ng-template matTabContent>
+        <app-users type="ecografista"></app-users>
+      </ng-template>
+    </mat-tab>
+
+    <mat-tab label="Laboratorista" *ngIf="role==1">
+      <ng-template matTabContent>
+        <app-users type="laboratorista"></app-users>
+      </ng-template>
+    </mat-tab>
+    <!-- <mat-tab label="Gestor Examenes" *ngIf="role==1">
+      <ng-template matTabContent>
+        <app-users type="gestor_examenes"></app-users>
+      </ng-template>
+    </mat-tab>
+    <mat-tab label="Asistentes Caja" *ngIf="role==1">
+      <ng-template matTabContent>
+        <app-users type="asistentes_caja"></app-users>
+      </ng-template>
+    </mat-tab> -->
+  </mat-tab-group>
+
+</div>

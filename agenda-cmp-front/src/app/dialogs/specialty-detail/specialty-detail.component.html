@@ -1,0 +1,29 @@
+<mat-progress-bar *ngIf="processing"></mat-progress-bar>
+<div fxLayout="row">
+	<button [mat-dialog-close]="{updated:false}" mat-icon-button style="color:red;" fxFlex="50%" fxLayoutAlign="start">
+		<mat-icon>cancel</mat-icon>
+	</button>
+</div>
+
+<h2 fxLayoutAlign="center">{{specialtyData.name}}</h2>
+
+<form [formGroup]="specialtyForm">
+	<div style="padding: 1%;" fxLayout fxLayout="column" fxLayoutGap.xs="0px">
+
+		<mat-form-field>
+			<input matInput formControlName="name" placeholder="Nombres" type="text">
+		</mat-form-field>
+
+		<mat-form-field>
+			<input matInput formControlName="price" placeholder="Precio" type="number">
+			<span matSuffix>$</span>
+		</mat-form-field>
+
+		<button mat-flat-button color="primary" [disabled]="specialtyForm.invalid" (click)="update()">Guardar cambios</button>
+
+	</div>
+</form>
+
+<div mat-dialog-actions>
+	<mat-slide-toggle [(ngModel)]="canEdit" cdkFocusInitial labelPosition="before" (change)="toggleChange($event)">Edición</mat-slide-toggle>
+</div>

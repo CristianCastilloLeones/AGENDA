@@ -1,0 +1,26 @@
+<h2 mat-dialog-title class="title">Editar laboratorio</h2>
+
+<div fxLayout="column">
+
+  <mat-form-field>
+    <mat-label>Nombre</mat-label>
+    <input type="text" [(ngModel)]="name" matInput>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-select #labcatSelect [(ngModel)]="labcat_id">
+      <mat-option *ngFor="let c of categories" [value]="c.id">
+        {{c.name}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Precio</mat-label>
+    <input type="number" [(ngModel)]="price" matInput>
+    <span matSuffix>$</span>
+  </mat-form-field>
+
+  <button mat-flat-button color="primary" (click)="save()" [disabled]="(!name || !price || !labcat_id) && categories.length < 1">Guardar</button>
+
+</div>

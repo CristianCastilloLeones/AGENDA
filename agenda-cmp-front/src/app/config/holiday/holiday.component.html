@@ -1,0 +1,32 @@
+<mat-progress-bar class="top-progress" mode="indeterminate" color="accent" *ngIf="processing"></mat-progress-bar>
+
+<div class="main-cont">
+
+<div fxLayout="row" class="tit">
+<mat-icon class="little-down">event_busy</mat-icon>
+<h1 class="mat-h1">Dias no laborables</h1>
+</div>
+
+<ng-select
+        [items]="months"
+        [searchable]="false"
+        bindLabel="name"
+	(change)="monthChanged($event)"
+        placeholder="Seleccione el mes"
+        [disabled]="processing"
+        [(ngModel)]="selectedMonth">
+</ng-select>
+
+<ng-select
+        [items]="monthDays"
+        [multiple]="true"
+        [disabled]="processing"
+        [closeOnSelect]="false"
+        bindLabel="label"
+        [searchable]="false"
+        placeholder="Seleccione los dias"
+        [(ngModel)]="days">
+</ng-select>
+
+<button mat-flat-button (click)="save()" color="primary" [disabled]="processing">Guardar</button>
+</div>

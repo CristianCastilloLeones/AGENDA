@@ -1,0 +1,46 @@
+<mat-progress-bar class="top-progress" mode="indeterminate" color="accent" *ngIf="processing"></mat-progress-bar>
+
+<div fxLayout="row">
+	<mat-icon class="little-down">layers</mat-icon>
+	<h1 mat-dialog-title fxHide.xs="true" class="mat-h1">Nuevo seguro o empresa</h1>
+</div>
+
+<form [formGroup]="insuranceForm">
+	<div style="padding: 1%;" fxLayout fxLayout="row wrap" fxLayoutGap.xs="1px" mat-dialog-content>
+
+		<mat-form-field fxFlex="49%" fxFlex.xs="100%">
+			<input matInput formControlName="comercial_name" placeholder="Nombre comercial" type="text">
+		</mat-form-field>
+
+		<mat-form-field fxFlex="49%" fxFlex.xs="100%">
+			<mat-select placeholder="Tipo de identificación" formControlName="identification_type_id">
+				<mat-option *ngFor="let idType of idTypes" [value]="idType.id">
+					{{idType.name}}
+				</mat-option>
+			</mat-select>
+		</mat-form-field>
+
+		<mat-form-field fxFlex="49%" fxFlex.xs="100%">
+			<input matInput formControlName="identification_number" placeholder="Numero de identificación" type="text">
+		</mat-form-field>
+
+		<mat-form-field fxFlex="49%" fxFlex.xs="100%">
+			<input matInput formControlName="email" placeholder="Correo *" type="email">
+		</mat-form-field>
+
+		<mat-form-field fxFlex="49%">
+			<input matInput formControlName="phone" placeholder="Telefono" type="phone">
+		</mat-form-field>
+
+        <mat-form-field fxFlex="49%" fxFlex.xs="100%">
+			<input matInput formControlName="social_reason" placeholder="Razón social" type="text">
+		</mat-form-field>
+		
+		<mat-form-field fxFlex="100%">
+			<input matInput formControlName="address" placeholder="Direccion" type="text">
+		</mat-form-field>
+
+		<button mat-flat-button color="accent" fxFlex="100%" [disabled]="insuranceForm.invalid" (click)="createOrUpdateInsurance()">Agregar</button>
+
+	</div>
+</form>

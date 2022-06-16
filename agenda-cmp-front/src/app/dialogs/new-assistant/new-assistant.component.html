@@ -1,0 +1,77 @@
+<mat-progress-bar class="top-progress" mode="indeterminate" color="accent" *ngIf="processing"></mat-progress-bar>
+
+
+<div fxLayout="row">
+	<mat-icon class="little-down">person_outline</mat-icon>
+	<h1 class="mat-h1">Nuevo
+		<span *ngIf="eventData.role == 5">enfermero(a)</span>
+		<span *ngIf="eventData.role == 4">asistente</span>
+    <span *ngIf="eventData.role == 6">ecografista</span>
+    <span *ngIf="eventData.role == 7">laboratorista</span>
+		<span *ngIf="eventData.role == 10">gestor de examenes</span>
+		<span *ngIf="eventData.role == 11">asistente de caja</span>
+
+	</h1>
+</div>
+
+<form [formGroup]="assistantForm">
+	<div style="padding: 1%;" fxLayout fxLayout="column" fxLayoutGap.xs="0px">
+		<mat-form-field>
+			<input matInput formControlName="dni" placeholder="Cedula" type="number">
+		</mat-form-field>
+
+		<mat-form-field>
+			<input matInput formControlName="name" placeholder="Nombres" type="text">
+		</mat-form-field>
+
+		<mat-form-field>
+			<input matInput formControlName="surname" placeholder="Apellidos" type="text">
+		</mat-form-field>
+
+		<mat-form-field fxFlex="49%">
+			<mat-select placeholder="Sucursal" formControlName="branch_office">
+				<mat-option *ngFor="let bo of boffices" [value]="bo.id">
+					{{bo.name}}
+				</mat-option>
+			</mat-select>
+		</mat-form-field>
+<mat-form-field fxFlex="49%">
+  <mat-select placeholder="Roles" formControlName="role" multiple>
+    <mat-option *ngFor="let rol of role" [value]="rol.id">
+      {{rol.name}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+		<mat-form-field>
+			<input matInput formControlName="phone" placeholder="Telefono" type="phone">
+		</mat-form-field>
+
+		<mat-form-field>
+			<input matInput formControlName="email" placeholder="Correo" type="email">
+		</mat-form-field>
+
+		<mat-form-field>
+			<input matInput formControlName="password" placeholder="Contraseña" type="password">
+		</mat-form-field>
+
+		<mat-form-field>
+			<input matInput formControlName="c_password" placeholder="Repetir Contraseña" type="password">
+		</mat-form-field>
+    <mat-slide-toggle fxFlex="99%" [(ngModel)]="canEdit" [ngModelOptions]="{standalone: true}" labelPosition="before"
+      (change)="toggleChange($event)">Vincular usuario de facturacion
+    </mat-slide-toggle>
+    <mat-form-field fxFlex="49%">
+      <mat-select placeholder="Usuario facturacion" formControlName="userFact">
+        <mat-option *ngFor="let user of usersFact" [value]="user.id">
+        {{user.email}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="49%">
+      <input matInput formControlName="userFactPassword" placeholder="Contraseña Usuario Facturacion" type="password">
+    </mat-form-field>
+		<button mat-flat-button color="accent" (click)="create()" [disabled]="assistantForm.invalid">Agregar</button>
+
+	</div>
+</form>

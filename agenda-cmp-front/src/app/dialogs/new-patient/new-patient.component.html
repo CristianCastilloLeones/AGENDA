@@ -1,0 +1,139 @@
+<mat-progress-bar
+  class="top-progress"
+  mode="indeterminate"
+  color="accent"
+  *ngIf="processing"
+></mat-progress-bar>
+
+<div fxLayout="row">
+  <mat-icon class="little-down">person_outline</mat-icon>
+  <h1 mat-dialog-title fxHide.xs="true" class="mat-h1">Nuevo paciente</h1>
+</div>
+
+<form [formGroup]="patientForm">
+  <div
+    style="padding: 1%;"
+    fxLayout
+    fxLayout="row wrap"
+    mat-dialog-content
+  >
+  <mat-tab-group  mat-align-tabs="start">
+    <mat-tab label="Paciente">
+
+      <div  fxLayout
+    fxLayout="row wrap">
+        <mat-form-field fxFlex="49%" fxFlex.xs="100%">
+          <input matInput formControlName="name" placeholder="Nombres *" type="text" />
+        </mat-form-field>
+
+        <mat-form-field fxFlex="49%" fxFlex.xs="100%">
+          <input matInput formControlName="surname" placeholder="Apellidos *" type="text" />
+        </mat-form-field>
+
+        <mat-form-field fxFlex="49%" fxFlex.xs="100%">
+          <input matInput formControlName="dni" placeholder="Cedula" type="number" />
+        </mat-form-field>
+
+        <mat-form-field fxFlex="49%" fxFlex.xs="100%">
+          <mat-select placeholder="Sexo" formControlName="sexo">
+            <mat-option *ngFor="let s of SEXOS" [value]="s.name">
+              {{ s.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field fxFlex="49%">
+          <input matInput formControlName="birthdate" placeholder="Fecha de nacimiento" type="date" />
+        </mat-form-field>
+
+        <mat-form-field fxFlex="49%" fxFlex.xs="100%">
+          <mat-select formControlName="insurance" placeholder="Seguro *">
+            <mat-option *ngFor="let ins of INSURANCES" [value]="ins.id">
+              {{ ins.comercial_name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field fxFlex="49%" fxFlex.xs="100%">
+          <input matInput formControlName="phone" placeholder="Telefono" type="phone" />
+        </mat-form-field>
+
+        <mat-form-field fxFlex="49%" fxFlex.xs="100%">
+          <input matInput formControlName="email" placeholder="Correo" type="email" />
+        </mat-form-field>
+      </div>
+
+    </mat-tab>
+    <mat-tab label="Facturacion">
+      <div  fxLayout fxLayout="row wrap" >
+        <mat-slide-toggle fxFlex="99%" [disabled]="patientForm.invalid" [(ngModel)]="sameInfo" [ngModelOptions]="{standalone: true}" labelPosition="before"
+          (change)="toggleChange($event)">Misma informacion del paciente
+        </mat-slide-toggle>
+      </div>
+<div  fxLayout fxLayout="row wrap">
+
+      <mat-form-field fxFlex="49%" fxFlex.xs="100%">
+        <input matInput formControlName="fq_comercial_name" placeholder="Nombre comercial *" type="text" />
+      </mat-form-field>
+
+      <mat-form-field fxFlex="49%" fxFlex.xs="100%">
+        <mat-select placeholder="Tipo de identificación" formControlName="fq_identification_type_id">
+          <mat-option *ngFor="let idType of idTypes" [value]="idType.id">
+            {{ idType.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field fxFlex="49%" fxFlex.xs="100%">
+        <input matInput formControlName="fq_identification_number" placeholder="Numero de identificación *" type="text" />
+      </mat-form-field>
+
+      <mat-form-field fxFlex="49%" fxFlex.xs="100%">
+        <input matInput formControlName="fq_email" placeholder="Correo *" type="email" />
+      </mat-form-field>
+
+      <mat-form-field fxFlex="49%">
+        <input matInput formControlName="fq_phone" placeholder="Telefono *" type="phone" />
+      </mat-form-field>
+
+      <mat-form-field fxFlex="49%" fxFlex.xs="100%">
+        <input matInput formControlName="fq_social_reason" placeholder="Razón social *" type="text" />
+      </mat-form-field>
+
+      <mat-form-field fxFlex="100%">
+        <input matInput formControlName="fq_address" placeholder="Direccion *" type="text" />
+      </mat-form-field>
+  </div>
+
+    </mat-tab>
+    <mat-tab label="Contacto">
+<div  fxLayout fxLayout="row wrap">
+      <mat-form-field fxFlex="49%" fxFlex.xs="100%" fxHide.xs="true">
+        <input matInput formControlName="fname" placeholder="Nombre de familiar" type="text" />
+      </mat-form-field>
+
+      <mat-form-field fxFlex="49%" fxFlex.xs="100%" fxHide.xs="true">
+        <input matInput formControlName="fphone" placeholder="Telefono de familiar" type="phone" />
+      </mat-form-field>
+
+      <mat-form-field fxFlex="100%">
+        <input matInput formControlName="address" placeholder="Direccion de familiar" type="text" />
+      </mat-form-field>
+  </div>
+
+    </mat-tab>
+  </mat-tab-group>
+    <button
+      mat-flat-button
+      color="accent"
+      fxFlex="100%"
+      [disabled]="patientForm.invalid"
+      (click)="createPatient()"
+    >
+      Agregar
+    </button>
+    <br>
+        <small>Si el paciente no posee <strong>cédula</strong> o <strong>correo electrónico</strong>, deje los campos vacíos y
+          a continuación se
+          generará un código automatico para cada campo.</small>
+  
+  </div>
+</form>

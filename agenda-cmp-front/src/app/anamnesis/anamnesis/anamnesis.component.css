@@ -1,0 +1,49 @@
+.box-c{
+    border: 1px solid silver;
+    border-radius: 3px;
+}
+.sub-title {
+    margin: 16px 0px 16px 0px;
+    color: blue;
+}
+.mat-tab-body-content {
+    overflow-x: hidden;
+}
+.anamnesis-header{
+    background: #a3a3a323;
+}
+
+.header-title {
+    font-weight: lighter;
+    color:#1f81cf;
+    font-size: 13px;
+}
+
+.header-fix-content {
+    text-transform: capitalize;
+    font-size: 13px;
+}
+
+.tab-label {
+    font-size: 16px;
+}
+.related-labs {
+    width: 99%;
+    display: flex;
+    flex-flow: column;
+    justify-content: start;
+    padding: 5px;
+}
+.related-lab {
+    border-bottom: .5px solid #c8c8c8;
+}
+.example-full-width {
+  width: 25%;
+}
+.mat-card-content{
+  padding:0px !important;
+}
+.example-chip-list {
+  width: 100%;
+}
+

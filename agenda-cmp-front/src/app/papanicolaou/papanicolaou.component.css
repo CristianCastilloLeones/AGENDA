@@ -1,0 +1,21 @@
+.checkItem{
+  padding: 3px;
+  justify-content: space-between;
+}
+.checkCont{
+  margin:10px;
+}
+.full-width-table {
+  width: 100%;
+}
+.tablerow:hover{
+  background-color: #f2f2f2;
+  cursor: pointer;
+}
+.muestra{
+  color: rgb(33, 221, 58);
+}
+.nomuestra{
+  color: red;
+  margin: 3px;
+}

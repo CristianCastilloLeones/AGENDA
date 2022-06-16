@@ -1,0 +1,45 @@
+<mat-progress-bar mode="indeterminate" class="top-progress" color="accent" *ngIf="processing"></mat-progress-bar>
+
+<div class="main-cont">
+
+<div fxLayout="row" class="tit">
+<mat-icon class="little-down">add_alarm</mat-icon>
+<h1 class="mat-h1">Horarios</h1>
+</div>
+
+<ng-select 
+placeholder="Especialista"
+notFoundText="No se encontraron coincidencias."
+[items]="users"
+bindLabel="label"
+(change)="search()"
+(click)="fakeReload()"
+[formControl]="user">
+	<ng-template ng-option-tmp let-item="item">
+	    {{item.name}} {{item.surname}} <small>- {{item.specialty}}</small>
+	</ng-template>
+</ng-select>
+
+<mat-horizontal-stepper [linear]="false" #stepper>
+	
+  <mat-step *ngFor="let i of [1,2,3,4,5,6,7]">
+  	<ng-template matStepLabel>{{dow[i-1]}}</ng-template>
+		<app-schedule [timeblocks]='timeblocks' [(inSchedule)]="weekSchedule[i]" [id]="i" (schedule)="updateSchedule($event)"></app-schedule>
+  </mat-step>
+
+</mat-horizontal-stepper>
+
+<br>
+<button [disabled]="processing" (click)="save()" mat-raised-button class="afternoon" style="margin-left: 5%;">Guardar horario</button>
+
+<div style="display: flex; flex-flow: row; margin:2% 5% 5% 5%; padding: 10px; background-color: #E0DDDD; justify-content: space-around;">
+	<div *ngFor="let i of [1,2,3,4,5,6,7];">
+	<span style="text-align: center;">{{dow[i-1]}}<hr></span>
+		<div *ngFor="let b of weekSchedule[i]; let index = index;" style="display: flex; flex-flow: column;">
+			<div>
+				<span *ngIf="weekSchedule[i].length > 0" class="morning" [class.afternoon]="timeblocks[b.time - 1].inning == 2">{{timeblocks[b.time - 1].start.slice(0,5)}} - {{timeblocks[b.time - 1].end.slice(0,5)}}</span>
+			</div>
+		</div>
+	</div>
+</div>
+</div>

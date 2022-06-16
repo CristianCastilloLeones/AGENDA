@@ -1,0 +1,24 @@
+<h2 mat-dialog-title class="title">Editar ecografía</h2>
+
+<div fxLayout="column">
+
+  <mat-form-field>
+    <mat-label>Nombre</mat-label>
+    <input type="text" [(ngModel)]="ecografia" matInput>
+  </mat-form-field>
+  
+  <mat-form-field>
+    <mat-label>Precio</mat-label>
+    <input type="number" [(ngModel)]="price" matInput>
+    <span matSuffix>$</span>
+  </mat-form-field>
+  
+  <mat-form-field>
+      <mat-label>Precio Ecografista</mat-label>
+    <input type="number" [(ngModel)]="eco_value" matInput (keydown.enter)="save()">
+    <span matSuffix>$</span>
+  </mat-form-field>
+  
+  <button mat-flat-button color="primary" (click)="save()" [disabled]="!ecografia && !price && !eco_value">Guardar</button>
+
+</div>

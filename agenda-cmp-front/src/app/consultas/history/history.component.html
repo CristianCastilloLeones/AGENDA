@@ -1,0 +1,103 @@
+<mat-progress-bar class="top-progress" mode="query" color="accent" *ngIf="processing"></mat-progress-bar>
+
+<div class="main-cont">
+
+  <div fxLayout="row" fxLayoutAlign="space-between center" >
+    <div fxLayout="row">
+      <mat-icon class="little-down">assignment</mat-icon>
+      <h1 class="mat-h1">Historial de Citas</h1>
+    </div>
+    <div fxLayout="row">
+      <div class="leyenda mat-elevation-z4" style="background-color:#3f51b5;" matTooltip="A realizarse"></div>
+      <div class="leyenda mat-elevation-z4" style="background-color:#A10050;" matTooltip="Cancelada"></div>
+      <div class="leyenda mat-elevation-z4" style="background-color:#D6C71C;" matTooltip="Reagendada"></div>
+      <div class="leyenda mat-elevation-z4" style="background-color:#5FA910;" matTooltip="Finalizada"></div>
+      <div class="leyenda mat-elevation-z4" style="background-color:#FF0000;" matTooltip="No asistió"></div>
+      <div class="leyenda mat-elevation-z4" style="background-color:#FFFFFF;" matTooltip="Todos"></div>
+    </div>
+    </div>
+
+  <div *ngIf="!hideInputs">
+  <mat-form-field>
+    <input matInput [(ngModel)]="dni" placeholder="Cedula *" (keyup.enter)="search()">
+  </mat-form-field>
+  &nbsp;
+  <mat-form-field>
+    <input matInput placeholder="Inicio" type="date" [(ngModel)]="start">
+  </mat-form-field>
+  &nbsp;
+  <mat-form-field>
+    <input matInput placeholder="Fin" type="date" [(ngModel)]="end">
+  </mat-form-field>
+
+  <button mat-flat-button (click)="search()">Buscar</button>
+
+  <br>
+
+  <br>
+
+  <mat-form-field *ngIf="dataSource.data.length > 0">
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtrar">
+  </mat-form-field>
+</div>
+
+  <table mat-table class="full-width-table mat-elevation-z8" [dataSource]="dataSource" matSort aria-label="Elements">
+
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Resultados</th>
+      <td mat-cell *matCellDef="let row" >
+        <button mat-flat-button color="primary" (click)="getData(row.id)">Recetas/Lab</button>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="day">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Fecha</th>
+      <td mat-cell *matCellDef="let row">{{row.day | date: 'dd-MM-yyyy'}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="dname">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre (Esp)</th>
+      <td mat-cell *matCellDef="let row">{{row.dname}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="dsurname">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Apellido (Esp)</th>
+      <td mat-cell *matCellDef="let row">{{row.dsurname}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="pname">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre (Pac)</th>
+      <td mat-cell *matCellDef="let row">{{row.pname}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="psurname">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Apellido (Pac)</th>
+      <td mat-cell *matCellDef="let row">{{row.psurname}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="specialty">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Especialidad</th>
+      <td mat-cell *matCellDef="let row">{{row.specialty}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="historia">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Historia</th>
+      <td mat-cell *matCellDef="let row">
+          <a mat-flat-button color="accent" [routerLink]="['/historia']" [queryParams]="{ historia: row.historia }">Registros</a>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Estatus</th>
+      <td mat-cell *matCellDef="let row">
+        <mat-icon [ngClass]="colorizeStatus(row.status)" [matTooltip]="colorizeStatus(row.status)">fiber_manual_record</mat-icon>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="tablerow"></tr>
+  </table>
+
+  <mat-paginator #paginator [length]="dataSource.data.length" [pageIndex]="0" [pageSize]="50" [pageSizeOptions]="[25, 50, 100, 250]">
+  </mat-paginator>
+</div>

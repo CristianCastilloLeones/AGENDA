@@ -1,0 +1,87 @@
+<mat-progress-bar class="top-progress" mode="indeterminate" color="accent" *ngIf="processing"></mat-progress-bar>
+
+<div class="main-cont">
+  <form [formGroup]="dateForm">
+    <div fxLayout="row" fxLayoutAlign="space-between start">
+      <h1 class="mat-h1">Interconsulta</h1>
+      <h1 class="mat-h1">
+        <mat-chip-list #chipList *ngIf="price">Total: <mat-chip style="background:#FF6E40;font-size: 20px;">{{price | currency}}
+          </mat-chip>
+        </mat-chip-list>
+      </h1>
+    </div>
+
+    <div style="height: 31px; display:flex; flex-flow:row-reverse;">
+      <span *ngIf="todayEvents > 0" class="today-events">
+        Este especialista tiene {{todayEvents}} citas agendadas para el
+        {{dateForm.get('date').value | date : 'dd-MM-yyyy'}}.
+      </span>
+      <span *ngIf="todayEvents == -1" class="today-no-events">
+        Este especialista no tiene citas agendadas para el {{dateForm.get('date').value | date : 'dd-MM-yyyy'}}.
+      </span>
+    </div>
+
+    <div [class.mat-elevation-z8]="!reagendar" style="padding: 2%;" fxLayout fxLayout="row wrap" fxLayout.xs="column"
+      fxLayoutGap="4px" fxLayoutGap.xs="0px">
+
+      <ng-select  fxFlex="49%" fxFlex.xs="100%" placeholder="Especialidad"
+        notFoundText="No se encontraron coincidencias." [items]="specialties" bindLabel='name'
+        formControlName="specialty">
+      </ng-select>
+
+      <ng-select fxFlex="49%" fxFlex.xs="100%"  placeholder="Especialista"
+        notFoundText="No se encontraron coincidencias." [items]="docs" bindLabel='fullName' formControlName="doc">
+
+        <ng-template ng-option-tmp let-item="item">
+          {{item.name | uppercase}} {{item.surname | uppercase}} <small>{{item.dni}}</small>
+        </ng-template>
+
+      </ng-select>
+      <!-- <ng-select fxFlex="100%" placeholder="Paciente"
+        notFoundText="No se encontraron coincidencias." [(items)]="pacientes" bindLabel='fullName'
+        id="patient-text" formControlName="patient">
+        <ng-template ng-header-tmp>
+          <button mat-flat-button color="accent" (click)="newPatient()">
+            <mat-icon>add</mat-icon> Agregar nuevo
+          </button>
+        </ng-template>
+        <ng-template ng-option-tmp let-item="item">
+          {{item.name}} {{item.surname}} <small>{{item.dni}}</small>
+        </ng-template>
+
+      </ng-select> -->
+
+      <mat-form-field fxFlex="100%">
+        <input matInput formControlName="date" [matDatepicker]="picker" (click)="picker.open()" (focus)="picker.open()"
+          placeholder="Seleccione la fecha" [min]="minDate">
+        <mat-datepicker-toggle matSuffix [for]="picker">
+
+        </mat-datepicker-toggle>
+        <mat-datepicker #picker touchUi></mat-datepicker>
+      </mat-form-field>
+
+      <!--
+      <ng-select fxFlex="100%" fxFlex.xs="100%" placeholder="Seleccione hora" appendTo="body"
+        notFoundText="No hay mas citas para este dia." [items]="timeBlocks" bindLabel='time.start'
+        formControlName="hour">
+        <ng-template ng-option-tmp let-item="item">
+          {{item.time.start.slice(0,5)}} <small>*30min</small>
+        </ng-template>
+      </ng-select>
+      -->
+
+      <mat-form-field fxFlex="100%">
+        <textarea matInput placeholder="Observación" formControlName="observation">
+	      </textarea>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" fxFlex="100%" [disabled]="!dateForm.valid || processing"
+        (click)="agendar(true)" >Procesar Interconsulta </button>
+      <!-- <div fxFlex="18%"></div>
+      <button mat-raised-button color="accent" fxFlex="40%" [disabled]="!dateForm.valid || processing"
+        (click)="agendar(false)" *ngIf="!reagendar">Interconsulta (con factura)</button> -->
+
+
+    </div>
+  </form>
+</div>

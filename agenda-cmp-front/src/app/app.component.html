@@ -1,0 +1,44 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport="true" [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="!(isHandset$ | async) && !(loggedIn | async)">
+    <mat-toolbar style="background-color: #1976bf">
+      <img src="./assets/image.png" height="54px" alt="Centro Medico Popular">
+    </mat-toolbar>
+    <mat-nav-list *ngIf="!(loggedIn | async)">
+      <span *ngFor="let it of items">
+        <span *ngIf="it.menuLabel" class="menulabel">
+          {{it.name}}
+        </span>
+        <a *ngIf="!it.menuLabel" mat-list-item routerLink="{{it.link}}" class="menu-link">
+          <mat-icon>{{it.icon}}</mat-icon>
+          &nbsp;
+          {{it.name}}
+        </a>
+      </span>
+      <hr>
+      <a *ngIf="role == '1' || role == '4'" class="menu-link" style="color:white;" mat-list-item href="http://74.127.61.115:93/invoice/prefactura" target="_blank">
+        <mat-icon>receipt</mat-icon>
+        &nbsp;
+        Listar prefacturas
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary" [class.invisible]="(loggedIn | async)">
+      <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()" *ngIf="(isHandset$ | async) && !(loggedIn | async)">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <span style="flex:1 1;"></span>
+      <span class="mat-button" style="font-size: .8rem;">{{userName()}}</span>
+      <button [matMenuTriggerFor]="appMenu" mat-icon-button matTooltip="Salir" *ngIf="!(loggedIn | async)">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+    </mat-toolbar>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+<mat-menu #appMenu="matMenu">
+  <button mat-menu-item (click)="editUser()">Editar usuario</button>
+  <button mat-menu-item (click)="logout()">Salir</button>
+</mat-menu>

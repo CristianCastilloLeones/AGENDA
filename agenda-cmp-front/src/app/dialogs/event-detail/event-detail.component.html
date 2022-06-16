@@ -1,0 +1,58 @@
+<mat-progress-bar class="top-progress" mode="indeterminate" color="accent" *ngIf="processing"></mat-progress-bar>
+
+<div *ngIf="details">
+
+	<button [mat-dialog-close]="null" mat-icon-button style="float:right; color:red;">
+		<mat-icon>cancel</mat-icon>
+	</button>
+
+	<div fxLayout="row">
+		<h1 class="mat-h1">Detalles de la cita</h1>
+	</div>
+
+	<div fxLayout fxLayout="row">
+		<p fxFlex="100%" fxLayoutAlign="start"><strong>Fecha&nbsp;</strong> {{eventData.event.start._i | date : 'dd-MM-yyy
+			HH:mm'}}</p>
+	</div>
+
+	<div fxLayout fxLayout="column wrap" fxLayout.xs="column" class="box" *ngIf="role!=2">
+		<p fxLayoutAlign="start">
+			<strong>Doctor&nbsp; </strong> {{details.doc.name}} {{details.doc.surname}}
+		</p>
+		<p fxLayoutAlign="start">
+			<strong>Correo&nbsp; </strong> {{details.doc.email}}
+		</p>
+		<p fxLayoutAlign="start">
+			<strong>Telefono&nbsp; </strong> {{details.doc.phone}}
+		</p>
+	</div>
+	<mat-divider></mat-divider>
+	<div fxLayout fxLayout="column wrap" fxLayout.xs="column" class="box" *ngIf="role!=3">
+		<p fxLayoutAlign="start">
+			<strong>Paciente&nbsp; </strong> {{details.pat.name}} {{details.pat.surname}}
+		</p>
+		<p fxLayoutAlign="start">
+			<strong>Correo&nbsp; </strong> {{details.pat.email}}
+		</p>
+		<p fxLayoutAlign="start">
+			<strong>Telefono&nbsp; </strong> {{details.pat.phone}}
+		</p>
+	</div>
+
+	<div mat-dialog-actions fxLayout fxLayout="row" fxLayoutGap="2px" >
+		<button *ngIf="(details.status == 1 || details.status == 3 || details.status == 4) && (role == 1 || role == 2 || role == 5)" mat-flat-button color="primary" (click)="procesar()">Procesar
+			esta cita</button>
+		<button mat-flat-button color="warn" (click)="cancelEvent()" *ngIf="details.status == 1 || details.status == 3">Cancelar esta cita</button>
+		<button mat-flat-button color="accent" cdkFocusInitial (click)="reagendar()" *ngIf="role!=2 && (details.status == 1 || details.status == 3)">Reagendar</button>
+		<button mat-flat-button color="primary" cdkFocusInitial (click)="finish()" *ngIf="role!=3 && (details.status == 1 || details.status == 3)">Finalizada</button>
+	</div>
+	<div>
+		<p *ngIf="details.status == 2" style="background-color: #A10050; color:white; padding: 5px; text-align: center;">Esta
+			cita fue cancelada</p>
+			<br>
+		<p style="background-color: #f2f2f2; padding: 1px;" *ngIf="details.observation">
+			<strong>Observación:</strong>
+			{{details.observation}}
+		</p>
+	</div>
+</div>

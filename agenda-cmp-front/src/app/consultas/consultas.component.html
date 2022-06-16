@@ -1,0 +1,44 @@
+<mat-progress-bar class="top-progress" mode="indeterminate" color="accent" *ngIf="processing"></mat-progress-bar>
+
+<div class="main-cont" *ngIf="role != '7'">
+
+  <div fxLayout="row">
+    <mat-icon class="little-down">assignment</mat-icon>
+    <h1 class="mat-h1">Citas agendadas</h1>
+  </div>
+
+  <div style="padding: 1%;" class="mat-elevation-z8">
+
+    <button mat-flat-button color="primary" (click)="add()" *ngIf="role != '2'">
+      <mat-icon>add</mat-icon> Nueva cita
+    </button>
+
+    <mat-form-field style="margin-left: 5px; width: 50%;" *ngIf="canSearch">
+      <mat-label>Cedula (Médico o Paciente)</mat-label>
+      <input type="text" [(ngModel)]="search" matInput (keydown.enter)="getFilteredEvents()">
+    </mat-form-field>
+
+    <button mat-button color="primary" (click)="getFilteredEvents()" *ngIf="canSearch">Buscar</button>
+
+    <div fxLayout="row" style="float:right;">
+      <div class="leyenda mat-elevation-z4" (click)="filterEvents('#3f51b5')" style="background-color:#3f51b5;"
+        matTooltip="A realizarse"></div>
+      <div class="leyenda mat-elevation-z4" (click)="filterEvents('#A10050')" style="background-color:#A10050;"
+        matTooltip="Cancelada"></div>
+      <div class="leyenda mat-elevation-z4" (click)="filterEvents('#D6C71C')" style="background-color:#D6C71C;"
+        matTooltip="Reagendada"></div>
+      <div class="leyenda mat-elevation-z4" (click)="filterEvents('#5FA910')" style="background-color:#5FA910;"
+        matTooltip="Finalizada"></div>
+      <div class="leyenda mat-elevation-z4" (click)="filterEvents('#FF0000')" style="background-color:#FF0000;"
+        matTooltip="No asistió"></div>
+      <div class="leyenda mat-elevation-z4" (click)="filterEvents('#FFFFFF')" style="background-color:#FFFFFF;"
+        matTooltip="Todos"></div>
+    </div>
+
+    <mat-divider style="margin-bottom: 5px; margin-top: 5px;"></mat-divider>
+
+    <ng-fullcalendar #ucCalendar *ngIf="calendarOptions" [options]="calendarOptions" (eventClick)="eventClick($event.detail)"
+      (select)="eventSelect($event)"></ng-fullcalendar>
+  </div>
+
+</div>

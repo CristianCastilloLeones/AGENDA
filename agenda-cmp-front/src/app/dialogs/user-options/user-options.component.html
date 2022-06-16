@@ -1,0 +1,248 @@
+<mat-progress-bar *ngIf="processing"></mat-progress-bar>
+<div fxLayout="row">
+  <button
+    [mat-dialog-close]="{ updated: false }"
+    mat-icon-button
+    style="color:red;"
+    fxFlex="50%"
+    fxLayoutAlign="start"
+  >
+    <mat-icon>cancel</mat-icon>
+  </button>
+</div>
+
+<h2 fxLayoutAlign="center">{{ userData.name }} {{ userData.surname }}</h2>
+<div mat-dialog-content>
+  <form [formGroup]="userForm">
+    <div style="padding: 1%;" fxLayout fxLayout="column" fxLayoutGap.xs="0px">
+      <mat-form-field>
+        <input
+          matInput
+          formControlName="dni"
+          placeholder="Cedula"
+          type="text"
+        />
+      </mat-form-field>
+
+      <mat-form-field>
+        <input
+          matInput
+          formControlName="name"
+          placeholder="Nombres"
+          type="text"
+        />
+      </mat-form-field>
+
+
+
+      <mat-form-field>
+        <input
+          matInput
+          formControlName="surname"
+          placeholder="Apellidos"
+          type="text"
+        />
+      </mat-form-field>
+
+      <mat-form-field *ngIf="userData.type === 'paciente'">
+        <mat-select placeholder="Seguro" formControlName="insurance">
+          <mat-option *ngFor="let ins of INSURANCES" [value]="ins.id">
+            {{ ins.comercial_name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input
+          matInput
+          formControlName="phone"
+          placeholder="Telefono"
+          type="phone"
+        />
+      </mat-form-field>
+
+      <mat-form-field>
+        <input
+          matInput
+          formControlName="email"
+          placeholder="Correo"
+          type="email"
+        />
+      </mat-form-field>
+
+      <mat-form-field>
+        <input
+          matInput
+          formControlName="password"
+          placeholder="Contraseña"
+          type="password"
+        />
+      </mat-form-field>
+      <mat-form-field fxFlex="49%" *ngIf="userData.type != 'paciente'">
+        <mat-select placeholder="Sucursal" formControlName="branch_office">
+          <mat-option *ngFor="let bo of BRANCH_OFFICES" [value]="bo.id">
+            {{ bo.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field fxFlex="49%" *ngIf="userData.type != 'paciente'">
+        <mat-select placeholder="Roles" formControlName="role" multiple>
+          <mat-option *ngFor="let rol of role" [value]="rol.id">
+            {{rol.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field fxFlex="49%" *ngIf="userData.type === 'paciente'">
+        <input
+          matInput
+          formControlName="birthdate"
+          placeholder="Fecha de nacimiento"
+          type="date"
+        />
+      </mat-form-field>
+
+      <mat-form-field *ngIf="userData.type === 'paciente'">
+        <input
+          matInput
+          formControlName="address"
+          placeholder="Direccion"
+          type="text"
+        />
+      </mat-form-field>
+
+    <!-- FACTURACION -->
+
+    <h3 class="mat-h3" fxFlex="100%">Datos de facturación</h3>
+
+    <mat-form-field fxFlex="49%" fxFlex.xs="100%" *ngIf="userData.type === 'paciente'">
+      <input
+        matInput
+        formControlName="fq_comercial_name"
+        placeholder="Nombre comercial"
+        type="text"
+      />
+    </mat-form-field>
+
+    <mat-form-field fxFlex="49%" fxFlex.xs="100%" *ngIf="userData.type === 'paciente'">
+	  <mat-select
+        placeholder="Tipo de identificación"
+        formControlName="fq_identification_type_id"
+      >
+        <mat-option *ngFor="let idType of idTypes" [value]="idType.id">
+          {{ idType.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="49%" fxFlex.xs="100%" *ngIf="userData.type === 'paciente'">
+      <input
+        matInput
+        formControlName="fq_identification_number"
+        placeholder="Numero de identificación"
+        type="text"
+      />
+    </mat-form-field>
+
+    <mat-form-field fxFlex="49%" fxFlex.xs="100%" *ngIf="userData.type === 'paciente'">
+      <input
+        matInput
+        formControlName="fq_email"
+        placeholder="Correo *"
+        type="email"
+      />
+    </mat-form-field>
+
+    <mat-form-field fxFlex="49%">
+      <input
+        matInput
+        formControlName="fq_phone"
+        placeholder="Telefono"
+        type="phone"
+      />
+    </mat-form-field>
+
+    <mat-form-field fxFlex="49%" fxFlex.xs="100%" *ngIf="userData.type === 'paciente'">
+      <input
+        matInput
+        formControlName="fq_social_reason"
+        placeholder="Razón social"
+        type="text"
+      />
+    </mat-form-field>
+
+    <mat-form-field fxFlex="100%" *ngIf="userData.type === 'paciente'">
+      <input
+        matInput
+        formControlName="fq_address"
+        placeholder="Direccion"
+        type="text"
+      />
+	</mat-form-field>
+
+	<!-- Paciente Factuarcion -->
+  <mat-slide-toggle fxFlex="99%" [(ngModel)]="haveFQ" [ngModelOptions]="{standalone: true}" labelPosition="before"
+    (change)="toggleChangeFact($event)" *ngIf="userData.type !== 'paciente'">Vincular usuario de facturacion
+  </mat-slide-toggle>
+  <mat-form-field fxFlex="49%" *ngIf="userData.type !== 'paciente'">
+    <mat-select placeholder="Usuario facturacion" formControlName="userFact">
+      <mat-option *ngFor="let user of usersFact" [value]="user.id">
+        {{user.email}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field fxFlex="49%" *ngIf="userData.type !== 'paciente'">
+    <input matInput formControlName="userFactPassword" placeholder="Contraseña Usuario Facturacion" type="password">
+  </mat-form-field>
+
+      <!-- <mat-form-field *ngIf="userData.type !== 'paciente'">
+        <input
+          matInput
+          formControlName="fq_user"
+          placeholder="Usuario facturación"
+          type="text"
+        />
+      </mat-form-field>
+
+      <mat-form-field *ngIf="userData.type !== 'paciente'">
+        <input
+          matInput
+          formControlName="fq_pass"
+          placeholder="Contraseña facturación"
+          type="password"
+        />
+      </mat-form-field> -->
+
+      <a
+        *ngIf="userData.type == 'especialista' || userData.type == 'paciente'"
+        routerLink="usuarios/consultas"
+        [queryParams]="{ dni: userForm.value.dni }"
+        (click)="dialogRef.close()"
+        >Historico de consultas</a
+      >
+    </div>
+
+  </form>
+</div>
+
+<div mat-dialog-actions>
+  <button
+    mat-flat-button
+    color="primary"
+    [disabled]="!canEdit"
+    (click)="update()"
+  >
+    Guardar cambios
+  </button>
+  <button mat-flat-button color="accent" (click)="disableUser()">
+    {{ userData.status ? "Deshabilitar" : "Habilitar" }} usuario
+  </button>
+  <span style="flex:1 1;"></span>
+  <mat-slide-toggle
+    [(ngModel)]="canEdit"
+    cdkFocusInitial
+    labelPosition="before"
+    (change)="toggleChange($event)"
+    >Edición
+  </mat-slide-toggle>
+</div>

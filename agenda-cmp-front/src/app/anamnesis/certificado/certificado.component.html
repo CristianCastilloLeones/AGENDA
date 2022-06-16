@@ -1,0 +1,94 @@
+<div class="main-cont">
+  <form [formGroup]="certForm">
+
+    <div>
+      <h1 class="mat-h1">
+        <mat-icon>add</mat-icon> Nuevo Certificado
+      </h1>
+    </div>
+    <mat-card *ngIf="specialtyControl.value">
+      <p *ngIf="specialtyControl.value">
+        Certifico que el/la paciente <strong>{{patient.name.toUpperCase()}} {{patient.surname.toUpperCase()}}</strong>
+        fue antendido en este centro médico en la
+        especialidad de: {{specialtyControl.value}}</p>
+      <p *ngIf="descriptionControl.value">
+        {{descriptionControl.value | uppercase}}
+      </p>
+      <p *ngIf="cieControl.value">
+        CIE 10: {{cieControl.value}}
+      </p>
+      <p *ngIf="reposoControl.value">
+        Se recomienda tratamiento medico y reposo por {{reposoControl.value}} dia/s
+      </p>
+    </mat-card>
+<br>
+    <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="start center" fxLayoutGap="2%">
+
+
+      <!-- <mat-form-field fxFlex="100%">
+        <textarea matInput placeholder="Especialidad *" formControlName="specialty"></textarea>
+      </mat-form-field> -->
+
+
+      <mat-form-field fxFlex="48%" fxFlex.xs="100%">
+        <mat-label>Especialidad</mat-label>
+        <mat-select  formControlName="specialty" name="specialty" [formControl]="specialtyControl">
+          <mat-option *ngFor="let item of specialties" [value]="item.name">
+            {{item.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field fxFlex="48%" fxFlex.xs="100%">
+
+        <input type="text" placeholder="Descripcion del diagnostico" matInput formControlName="cie" [matAutocomplete]="auto" [formControl]="cieControl">
+
+        <mat-autocomplete #auto="matAutocomplete" onselect="searchCie($value)">
+          <mat-option *ngFor="let cie of cie10" [value]="cie.cod_cie+' | '+cie.descripcion">
+            {{cie.cod_cie}} | {{cie.descripcion}}
+          </mat-option>
+        </mat-autocomplete>
+        <div matSuffix>
+          <mat-icon style="color:red; cursor: pointer;" *ngIf="clearCie" (click)="clearCie10()">
+            remove_circle
+          </mat-icon>
+
+        </div>
+        <div matSuffix>
+          <mat-spinner diameter="15" *ngIf="loadCie"></mat-spinner>
+        </div>
+
+      </mat-form-field>
+
+      <mat-form-field fxFlex="100%" fxFlex.xs="100%">
+        <textarea type="text" matInput placeholder="Justificación *" formControlName="description" [formControl]="descriptionControl"></textarea>
+      </mat-form-field>
+
+
+      <!-- <mat-form-field fxFlex="50%" fxFlex.xs="100%">
+        <textarea matInput placeholder="CIE10 *" formControlName="cie"></textarea>
+      </mat-form-field> -->
+
+      <mat-form-field fxFlex="25%" fxFlex.xs="100%">
+        <input  type="number" matInput placeholder="Reposo (dias)" formControlName="reposo" [formControl]="reposoControl">
+
+      </mat-form-field>
+
+      <mat-form-field fxFlex="15%">
+        <input matInput placeholder="Precio (USD)" formControlName="price" type="number">
+      </mat-form-field>
+
+      <mat-form-field fxFlex="55%">
+        <input matInput placeholder="Observación" formControlName="observation">
+      </mat-form-field>
+
+
+    </div>
+
+    <button  mat-flat-button color="primary" (click)="save()">
+      Guardar
+    </button>
+
+  </form>
+
+</div>

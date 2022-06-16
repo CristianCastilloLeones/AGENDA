@@ -1,0 +1,82 @@
+<mat-progress-bar class="top-progress" mode="indeterminate" color="accent" *ngIf="processing"></mat-progress-bar>
+
+<div fxLayout="row">
+  <mat-icon class="little-down">person_outline</mat-icon>
+  <h1 class="mat-h1">Nuevo especialista</h1>
+</div>
+
+<form [formGroup]="docForm">
+  <div style="padding: 1%;" fxLayout fxLayout="row wrap" fxLayoutGap="2px" fxLayoutGap.xs="0px">
+    <mat-form-field fxFlex="49%">
+      <input matInput formControlName="dni" placeholder="Cedula" type="number">
+    </mat-form-field>
+
+    <mat-form-field fxFlex="49%">
+      <input matInput formControlName="name" placeholder="Nombres" type="text">
+    </mat-form-field>
+
+    <mat-form-field fxFlex="49%">
+      <input matInput formControlName="surname" placeholder="Apellidos" type="text">
+    </mat-form-field>
+
+    <mat-form-field fxFlex="49%">
+      <input matInput formControlName="phone" placeholder="Telefono" type="phone">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-select placeholder="Sucursal" formControlName="branch_office">
+        <mat-option *ngFor="let bo of boffices" [value]="bo.id">
+          {{bo.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="49%">
+      <input matInput formControlName="email" placeholder="Correo" type="email">
+    </mat-form-field>
+
+    <mat-form-field fxFlex="49%">
+      <input matInput formControlName="password" placeholder="Contraseña" type="password">
+    </mat-form-field>
+
+    <mat-form-field fxFlex="49%">
+      <input matInput formControlName="c_password" placeholder="Repetir Contraseña" type="password">
+    </mat-form-field>
+
+    <mat-form-field fxFlex="49%">
+      <input matInput formControlName="code" placeholder="Codigo de Medico" type="text">
+    </mat-form-field>
+
+    <mat-form-field fxFlex="49%">
+      <input matInput [matDatepicker]="picker" placeholder="Dia de cumpleaños" [min]="minDate" [max]="maxDate">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+<mat-form-field fxFlex="49%">
+  <mat-select placeholder="Roles" formControlName="role" multiple>
+    <mat-option *ngFor="let rol of role" [value]="rol.id">
+      {{rol.name}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+    <ng-select appendTo="body" placeholder="Especialidad" notFoundText="No se encontraron coincidencias." [items]="specialties"
+      bindLabel="name" formControlName="specialty" fxFlex="99%">
+    </ng-select>
+<mat-slide-toggle fxFlex="99%" [(ngModel)]="canEdit" [ngModelOptions]="{standalone: true}" labelPosition="before"
+  (change)="toggleChange($event)">Vincular usuario de facturacion
+</mat-slide-toggle>
+<mat-form-field fxFlex="49%">
+  <mat-select placeholder="Usuario facturacion" formControlName="userFact">
+    <mat-option *ngFor="let user of usersFact" [value]="user.id">
+      {{user.email}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+
+<mat-form-field fxFlex="49%">
+  <input matInput formControlName="userFactPassword" placeholder="Contraseña Usuario Facturacion" type="password">
+</mat-form-field>
+    <button fxFlex="99%" mat-flat-button color="accent" (click)="create()" [disabled]="docForm.invalid">Agregar</button>
+
+  </div>
+</form>

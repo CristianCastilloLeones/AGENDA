@@ -1,0 +1,50 @@
+.menulabel{
+  color:rgba(241, 240, 240, 0.5);
+  margin: 5px;
+  margin-left: 20px;
+  font-size: 15px;
+  border-bottom:1px solid rgba(241, 240, 240, 0.5);
+}
+
+.sidenav-container {
+  height: 100%;
+}
+
+.sidenav {
+  width: 200px;
+  background-color: #1976bf;
+}
+
+.mat-toolbar.mat-primary {
+  position: relative;
+  top: 0;
+  z-index: 1;
+}
+
+.mat-drawer-side{
+	border:none;
+}
+
+.menu-link{
+  color: rgba(255, 255, 255, 1);
+  font-size: 12px;
+}
+
+.menu-link:hover{
+  background-color: #2196f3;
+}
+
+.hide{
+	width: 0px;
+}
+
+.mat-toolbar-row, .mat-toolbar-single-row{
+  height: 47px;
+}
+
+.username{
+	font-size: 15px;
+}
+.invisible{
+  height: 0px;
+}
